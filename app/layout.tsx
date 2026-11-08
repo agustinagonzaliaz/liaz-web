@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     url: '/',
     siteName: site.name,
     title: 'liaz · páginas web con estilo propio',
-    description: 'Diseñamos tu tienda online a medida para que vendas más y respondas menos mensajes.',
+    description: 'Diseño tiendas online y webs profesionales a medida para que tu negocio tenga un lugar propio en internet.',
   },
   twitter: { card: 'summary_large_image' },
 };
@@ -42,6 +42,7 @@ const jsonLd = {
   name: site.name,
   url: site.siteUrl,
   description: 'Estudio creativo de diseño y desarrollo web para emprendimientos, tiendas y profesionales independientes.',
+  email: site.email,
   areaServed: 'AR',
   knowsAbout: ['diseño web', 'tiendas online', 'páginas web para emprendedores'],
 };

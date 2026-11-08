@@ -1,13 +1,13 @@
 import Reveal from './Reveal';
-import { steps, toBring } from '@/lib/content';
+import { steps } from '@/lib/content';
 
 export default function Proceso() {
   return (
     <section id="proceso" className="section">
       <div className="wrap stack">
         <Reveal className="head">
-          <p className="eyebrow">cómo trabajamos</p>
-          <h2 className="h2">De la idea a tu web, en tres etapas.</h2>
+          <p className="eyebrow">cómo trabajo</p>
+          <h2 className="h2">De la idea a tu web, en tres pasos.</h2>
         </Reveal>
         <ol className="steps">
           {steps.map((s, i) => (
@@ -18,11 +18,6 @@ export default function Proceso() {
             </Reveal>
           ))}
         </ol>
-        <Reveal className="bring">
-          <h3 className="h3">Para empezar, solo necesitás tener a mano:</h3>
-          <ul className="bring__list">{toBring.map((t) => <li key={t}>{t}</li>)}</ul>
-          <p className="bring__note">¿Te falta algo? Lo vemos juntos en la primera charla.</p>
-        </Reveal>
       </div>
     </section>
   );

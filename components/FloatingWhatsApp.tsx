@@ -1,17 +1,53 @@
-import { waLink } from '@/lib/config';
+'use client';
 
+import { useEffect, useState } from 'react';
+import { waLink } from '@/lib/config';
+import { ChatIcon } from './WaButton';
+
+/**
+ * Botón flotante de WhatsApp.
+ * Aparece recién después de la portada y se oculta cuando están a la vista
+ * el formulario, los bloques de contacto o el pie de página (marcados con data-hide-float),
+ * para no tapar textos ni botones.
+ */
 export default function FloatingWhatsApp() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const blockers = new Set<Element>();
+    let pastTop = false;
+    const update = () => setShow(pastTop && blockers.size === 0);
+    const onScroll = () => {
+      pastTop = window.scrollY > window.innerHeight * 0.6;
+      update();
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? blockers.add(e.target) : blockers.delete(e.target)));
+        update();
+      },
+      { rootMargin: '0px 0px -40px 0px' },
+    );
+    document.querySelectorAll('[data-hide-float]').forEach((el) => io.observe(el));
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
   return (
     <a
-      className="float-wa btn btn--dark"
+      className={`float-wa btn btn--dark${show ? ' is-shown' : ''}`}
       href={waLink('Hola liaz! Quiero saber más sobre tener mi web.')}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Escribinos por WhatsApp"
+      aria-label="Escribime por WhatsApp"
+      aria-hidden={!show}
+      tabIndex={show ? 0 : -1}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M21 12a9 9 0 0 1-13.3 7.9L3 21l1.2-4.5A9 9 0 1 1 21 12z" />
-      </svg>
+      <ChatIcon />
       <span>Hablemos</span>
     </a>
   );

@@ -1,12 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const links = [
-  { href: '#proyectos', label: 'Proyectos' },
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#proceso', label: 'Cómo trabajamos' },
-  { href: '#dudas', label: 'Dudas' },
+  { href: '/proyectos', label: 'Proyectos' },
+  { href: '/tienda-online', label: 'Tienda online' },
+  { href: '/web-profesional', label: 'Web profesional' },
+  { href: '/#dudas', label: 'Dudas' },
 ];
 
 export default function Header() {
@@ -25,7 +26,7 @@ export default function Header() {
   return (
     <header className={`header${scrolled ? ' is-scrolled' : ''}`}>
       <div className="wrap header__in">
-        <a className="logo" href="#inicio" aria-label="liaz, inicio">liaz</a>
+        <Link className="logo" href="/" aria-label="liaz, inicio" onClick={close}>liaz</Link>
         <button
           className="menu-btn"
           type="button"
@@ -37,9 +38,9 @@ export default function Header() {
         </button>
         <nav id="menu" className={`nav${open ? ' is-open' : ''}`} aria-label="Principal">
           {links.map((l) => (
-            <a key={l.href} className="link" href={l.href} onClick={close}>{l.label}</a>
+            <Link key={l.href} className="link" href={l.href} onClick={close}>{l.label}</Link>
           ))}
-          <a className="btn btn--dark btn--sm" href="#contacto" onClick={close}>Hablemos</a>
+          <Link className="btn btn--dark btn--sm" href="/#contacto" onClick={close}>Hablemos</Link>
         </nav>
       </div>
     </header>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Reveal from './Reveal';
 import { pains } from '@/lib/content';
-import { waLink } from '@/lib/config';
+import WaButton from './WaButton';
 
 /** "¿Qué te pasa hoy?": cada opción muestra una respuesta a medida y un contacto con mensaje propio. */
 export default function Diagnostico() {
@@ -42,7 +42,7 @@ export default function Diagnostico() {
             <ul className="diag__points">
               {pain.points.map((pt) => <li key={pt}>{pt}</li>)}
             </ul>
-            <a className="btn btn--dark" href={waLink(pain.wa)} target="_blank" rel="noopener noreferrer">{pain.cta}</a>
+            <WaButton message={pain.wa}>{pain.cta}</WaButton>
           </div>
         </div>
       </div>

@@ -1,17 +1,32 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react';
-import RotatingWord from './RotatingWord';
-import { heroWords } from '@/lib/content';
+import Link from 'next/link';
+import { useEffect, useRef, useState, type PointerEvent } from 'react';
+import BigA from './BigA';
 
-/* Cada palabra tiñe la "a" de fondo y la pastilla con un color de la paleta. */
-const accents = ['#B9D9E9', '#E9B7A5', '#D6C5E8', '#B9D9E9'];
+/* La "a" de fondo va cambiando suavemente entre los colores de la paleta. */
+const accents = ['#B9D9E9', '#E9B7A5', '#D6C5E8'];
+
+const explore = [
+  { href: '/proyectos', label: 'Proyectos' },
+  { href: '/tienda-online', label: 'Tienda online' },
+  { href: '/web-profesional', label: 'Web profesional' },
+  { href: '#dudas', label: 'Dudas' },
+];
 
 export default function Hero() {
   const [i, setI] = useState(0);
-  const onChange = useCallback((n: number) => setI(n), []);
   const ref = useRef<HTMLElement>(null);
   const frame = useRef(0);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = setInterval(() => setI((n) => (n + 1) % accents.length), 3200);
+    return () => {
+      clearInterval(id);
+      cancelAnimationFrame(frame.current);
+    };
+  }, []);
 
   /* La luz y la "a" siguen suavemente al mouse (solo con mouse, no en celulares). */
   const onMove = (e: PointerEvent<HTMLElement>) => {
@@ -29,12 +44,9 @@ export default function Hero() {
     });
   };
   const onLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.setProperty('--px', '0');
-    el.style.setProperty('--py', '0');
+    ref.current?.style.setProperty('--px', '0');
+    ref.current?.style.setProperty('--py', '0');
   };
-  useEffect(() => () => cancelAnimationFrame(frame.current), []);
 
   return (
     <section
@@ -45,23 +57,29 @@ export default function Hero() {
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
-      <div className="hero__bg" aria-hidden="true">
-        <span className="hero__glow" />
-        <span className="hero__a">a</span>
-      </div>
+      <BigA />
       <div className="wrap hero__inner">
         <p className="eyebrow up">liaz · estudio creativo de diseño web</p>
-        <h1 className="hero__title up">
-          <span className="hero__line1">Tu negocio merece un lugar propio en internet.</span>
-          <span className="hero__line2">Para <RotatingWord words={heroWords} onChange={onChange} /></span>
-        </h1>
+        <h1 className="hero__title up">Tu negocio merece un lugar propio en internet.</h1>
         <p className="hero__lead up">
-          Diseñamos tiendas online y páginas web profesionales a medida, pensadas para lo que tu negocio necesita.
+          Diseño tiendas online y webs profesionales a medida, pensadas para lo que tu negocio necesita.
         </p>
         <div className="actions up">
-          <a className="btn btn--dark btn--lg btn--shine" href="#contacto">Consultar por mi web</a>
+          <a className="btn btn--dark btn--lg btn--shine" href="#contacto">Contame sobre tu negocio</a>
           <a className="btn btn--outline btn--lg" href="#diagnostico">¿Es para mí?</a>
         </div>
+        <nav className="explore up" aria-label="Explorá">
+          <p className="explore__label">Explorá</p>
+          <div className="explore__links">
+            {explore.map((l) =>
+              l.href.startsWith('#') ? (
+                <a key={l.href} className="chip" href={l.href}>{l.label}</a>
+              ) : (
+                <Link key={l.href} className="chip" href={l.href}>{l.label}</Link>
+              ),
+            )}
+          </div>
+        </nav>
       </div>
     </section>
   );

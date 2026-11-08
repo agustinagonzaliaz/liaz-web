@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRef, useState, type FormEvent } from 'react';
 import Reveal from './Reveal';
-import { waLink } from '@/lib/config';
+import WaButton from './WaButton';
 import { projectTypes } from '@/lib/content';
 
 type Fields = { nombre: string; negocio: string; redes: string; medio: string; dato: string; tipo: string; mensaje: string };
@@ -15,7 +15,7 @@ const empty: Fields = { nombre: '', negocio: '', redes: '', medio: 'whatsapp', d
 function validate(f: Fields): Errors {
   const e: Errors = {};
   if (f.nombre.trim().length < 2) e.nombre = 'Escribí tu nombre.';
-  if (f.negocio.trim().length < 2) e.negocio = 'Contanos el nombre de tu negocio o emprendimiento.';
+  if (f.negocio.trim().length < 2) e.negocio = 'Escribí el nombre de tu negocio o emprendimiento.';
   if (f.medio === 'email') {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.dato.trim())) e.dato = 'Revisá tu mail: falta algo, por ejemplo la @.';
   } else if (f.dato.replace(/\D/g, '').length < 8) {
@@ -83,26 +83,23 @@ export default function Contacto() {
   const err = (k: keyof Fields) => errors[k] && <p className="field__error" id={`e-${k}`}>{errors[k]}</p>;
 
   return (
-    <section id="contacto" className="section section--choco">
+    <section id="contacto" className="section section--choco" data-hide-float>
       <div className="wrap contact">
         <Reveal className="contact__text">
           <p className="eyebrow">hablemos</p>
-          <h2 className="h2 h2--xl">Contanos sobre tu negocio.</h2>
-          <p className="lead">Completá el formulario y te respondemos para charlar sobre tu web. Si preferís, escribinos directo.</p>
-          <a className="btn btn--celeste btn--lg" href={waLink('Hola liaz! Quiero consultar por una web.')} target="_blank" rel="noopener noreferrer">
-            Escribinos por WhatsApp
-          </a>
+          <h2 className="h2 h2--xl">Contame sobre tu negocio.</h2>
+          <p className="lead">Completá el formulario y te respondo para charlar sobre tu web.</p>
         </Reveal>
 
         <div className="form-wrap">
           {status === 'sent' ? (
             <div className="result result--ok" ref={resultRef} tabIndex={-1} role="status">
-              <h3 className="h3 h3--lg">¡Recibimos tu consulta!</h3>
-              <p>Gracias, {fields.nombre.split(' ')[0]}. Te respondemos pronto por {fields.medio === 'email' ? 'mail' : 'WhatsApp'}.</p>
+              <h3 className="h3 h3--lg">¡Recibí tu consulta!</h3>
+              <p>Gracias, {fields.nombre.split(' ')[0]}. Te respondo pronto por {fields.medio === 'email' ? 'mail' : 'WhatsApp'}.</p>
             </div>
           ) : (
             <form className="form" ref={formRef} onSubmit={onSubmit} noValidate>
-              <p className="hp" aria-hidden="true"><label>No completar <input name="empresa" tabIndex={-1} autoComplete="off" /></label></p>
+              <div className="hp" aria-hidden="true"><label>No completar <input name="empresa" tabIndex={-1} autoComplete="off" aria-hidden="true" /></label></div>
               <div className="form__row">
                 <div className="field">
                   <label htmlFor="f-nombre">Tu nombre</label>
@@ -120,7 +117,7 @@ export default function Contacto() {
                 <input type="text" placeholder="@tumarca" {...fieldProps('redes')} />
               </div>
               <fieldset className="field">
-                <legend>¿Cómo te contactamos?</legend>
+                <legend>¿Cómo te contacto?</legend>
                 <div className="segmented">
                   {[['whatsapp', 'WhatsApp'], ['email', 'Mail']].map(([v, l]) => (
                     <label key={v} className="segmented__opt">
@@ -151,24 +148,28 @@ export default function Contacto() {
                 {err('tipo')}
               </fieldset>
               <div className="field">
-                <label htmlFor="f-mensaje">Contanos brevemente qué buscás <span className="field__opt">(opcional)</span></label>
+                <label htmlFor="f-mensaje">Contame brevemente qué buscás <span className="field__opt">(opcional)</span></label>
                 <textarea rows={3} {...fieldProps('mensaje')} />
               </div>
               <button className="btn btn--crema btn--lg" type="submit" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Enviando…' : 'Enviar consulta'}
               </button>
               <p className="form__legal">
-                Usamos tus datos solo para responder tu consulta. Más información en nuestra{' '}
+                Uso tus datos solo para responder tu consulta. Más información en la{' '}
                 <Link href="/privacidad">Política de privacidad</Link>.
               </p>
               {status === 'error' && (
                 <div className="result result--error" ref={resultRef} tabIndex={-1} role="alert">
-                  <p><b>No pudimos enviar tu consulta.</b> Probá de nuevo en un rato o mandala por WhatsApp, ya armamos el mensaje con tus datos.</p>
-                  <a className="btn btn--celeste" href={waLink(toWhatsApp(fields))} target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a>
+                  <p><b>No se pudo enviar tu consulta.</b> Probá de nuevo en un rato o mandala por WhatsApp: el mensaje ya está armado con tus datos.</p>
+                  <WaButton message={toWhatsApp(fields)} className="btn btn--celeste">Enviar por WhatsApp</WaButton>
                 </div>
               )}
             </form>
           )}
+          <div className="direct">
+            <p className="direct__q">¿Preferís escribir directo?</p>
+            <WaButton message="Hola liaz! Quiero consultar por una web." className="btn btn--celeste">Escribime por WhatsApp</WaButton>
+          </div>
         </div>
       </div>
     </section>

@@ -13,7 +13,7 @@ export default function Faq() {
         <Reveal className="head faq-layout__head">
           <p className="eyebrow">dudas</p>
           <h2 className="h2">Antes de empezar.</h2>
-          <p>Si tu pregunta no está acá, escribinos y te respondemos.</p>
+          <p>Si tu pregunta no está acá, escribime y te respondo.</p>
         </Reveal>
         <div className="faq">
           {faqs.map((f, i) => {

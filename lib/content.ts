@@ -1,8 +1,5 @@
 /** Todos los textos de la web. Editalos acá sin tocar los componentes. */
 
-/* ---------- Portada ---------- */
-export const heroWords = ['tu marca', 'tu tienda', 'tu feria', 'tu proyecto'];
-
 /* ---------- Proyectos ----------
  * kind: 'real' = proyecto real · 'concepto' = demostración propia (se muestra con esa etiqueta).
  * images: rutas dentro de /public. Si están vacías, se muestra un marco "captura pendiente".
@@ -24,6 +21,8 @@ export type Project = {
   mock?: 'tienda' | 'pro' | 'catalogo';
   url?: string;
   showcase?: { label: string; desktop: string; mobile?: string }[];
+  /** Texto corto para la página principal. */
+  summary?: string;
 };
 
 export const projects: Project[] = [
@@ -43,6 +42,7 @@ export const projects: Project[] = [
       'Panel para cargar, editar y publicar productos',
       'Control de stock y ventas',
     ],
+    summary: 'Una feria digital de ropa y accesorios nuevos y usados, con un panel propio para cargar productos sin tocar código.',
     images: { desktop: '', mobile: '' },
     showcase: [
       { label: 'Inicio', desktop: '/proyectos/kalos-inicio.webp', mobile: '/proyectos/kalos-inicio-cel.webp' },
@@ -98,49 +98,66 @@ export const pains: Pain[] = [
 /* ---------- Servicios ---------- */
 export type Service = {
   id: string;
+  slug: string;
   name: string;
   forWho: string;
+  /** Resumen de la página principal */
+  summary: string;
+  summaryPoints: string[];
+  /** Detalle de la página propia */
   text: string;
   base: string[];
   optional: string[];
-  cta: string;
   wa: string;
-  mock: 'tienda' | 'pro';
   color: 'celeste' | 'lila';
+  example: { desktop: string; mobile: string; brand: string };
+  seo: { title: string; description: string };
 };
 
 export const services: Service[] = [
   {
     id: 'tienda',
+    slug: '/tienda-online',
     name: 'Tienda online',
     forWho: 'Para emprendimientos que venden productos',
+    summary: 'Mostrás tus productos ordenados y hacés que comprarte sea fácil.',
+    summaryPoints: ['Catálogo con fotos, precios y talles', 'Pedidos por WhatsApp', 'Pensada para el celular'],
     text: 'Una web donde mostrás tus productos, organizás tu catálogo y hacés que comprarte sea fácil.',
     base: ['Catálogo de productos con fotos y precios', 'Categorías para ordenar todo', 'Pedidos o consultas por WhatsApp', 'Diseño pensado para el celular'],
     optional: ['Talles, colores y variantes', 'Carrito de compras', 'Que puedas actualizar productos y precios vos'],
-    cta: 'Quiero mi tienda',
     wa: 'Hola liaz! Quiero consultar por una tienda online.',
-    mock: 'tienda',
     color: 'celeste',
+    example: { desktop: '/ejemplos/tienda.webp', mobile: '/ejemplos/tienda-cel.webp', brand: 'Mora accesorios' },
+    seo: {
+      title: 'Tienda online para emprendedores · liaz',
+      description: 'Diseño tiendas online a medida: catálogo con fotos y precios, pedidos por WhatsApp y diseño pensado para el celular. Desde $40.000.',
+    },
   },
   {
     id: 'pro',
+    slug: '/web-profesional',
     name: 'Web profesional',
     forWho: 'Para profesionales, servicios y negocios',
+    summary: 'Presentás lo que hacés, mostrás tus servicios y recibís consultas.',
+    summaryPoints: ['Presentación y servicios', 'Contacto y WhatsApp', 'Se adapta a cualquier pantalla'],
     text: 'Una web para presentar lo que hacés, mostrar tus servicios y recibir consultas.',
     base: ['Presentación del negocio o profesional', 'Sección de servicios', 'Contacto y WhatsApp', 'Diseño adaptable a cualquier pantalla'],
     optional: ['Formulario de consultas', 'Galería de trabajos', 'Estructura preparada para buscadores'],
-    cta: 'Quiero mi web',
     wa: 'Hola liaz! Quiero consultar por una web profesional.',
-    mock: 'pro',
     color: 'lila',
+    example: { desktop: '/ejemplos/profesional.webp', mobile: '/ejemplos/profesional-cel.webp', brand: 'Clara Ruiz, nutrición' },
+    seo: {
+      title: 'Web profesional para profesionales y negocios · liaz',
+      description: 'Diseño webs profesionales a medida para presentar lo que hacés, mostrar tus servicios y recibir consultas. Desde $40.000.',
+    },
   },
 ];
 
-/* ---------- Proceso ---------- */
+/* ---------- Cómo trabajo ---------- */
 export const steps = [
-  { title: 'Charlamos', text: 'Conocemos tu negocio, qué querés lograr y qué necesitás. Con eso definimos juntos qué tipo de web te conviene.' },
-  { title: 'Diseñamos', text: 'Armamos una propuesta visual y funcional a tu medida. La revisás y hacemos los ajustes que acordemos.' },
-  { title: 'Publicamos', text: 'Dejamos tu web online y te explicamos cómo usarla y actualizarla, según las funciones de tu proyecto.' },
+  { title: 'Charlamos', text: 'Me contás tu negocio y definimos qué web te conviene.' },
+  { title: 'Diseño', text: 'Te muestro una propuesta a tu medida y la ajustamos juntos.' },
+  { title: 'Publicamos', text: 'Dejo tu web online y te enseño a usarla.' },
 ];
 
 export const toBring = [
@@ -150,25 +167,12 @@ export const toBring = [
   'Textos, precios o servicios',
 ];
 
-/* ---------- Por qué liaz ---------- */
-export const reasons = [
-  { title: 'Diseño con identidad', text: 'Sin plantillas genéricas: tu web se parece a tu marca.' },
-  { title: 'Trato directo', text: 'Hablás siempre con quien diseña tu web, de principio a fin.' },
-  { title: 'Pensada para el celular', text: 'Donde están tus clientes cuando llegan desde Instagram.' },
-  { title: 'Un lugar propio', text: 'Tu web es tuya y no depende de ninguna red social.' },
-];
-
 /* ---------- Preguntas frecuentes ---------- */
 export const faqs = [
-  { q: '¿Cuánto tarda en estar lista mi página?', a: 'Depende del tipo de web y de las funciones que necesites. Te damos un tiempo estimado en la propuesta, antes de empezar.' },
-  { q: '¿Necesito conocimientos técnicos?', a: 'No. Nos ocupamos de la parte técnica y te explicamos todo en un lenguaje simple.' },
-  { q: '¿Puedo modificar los productos o la información después?', a: 'Depende de cómo se arme tu web. Antes de empezar te contamos qué vas a poder actualizar por tu cuenta.' },
-  { q: '¿La web se ve bien desde el celular?', a: 'Sí. Todas las webs se diseñan pensando primero en el celular, porque es desde donde llega la mayoría de tus clientes.' },
-  { q: '¿Puedo conectar Instagram y WhatsApp?', a: 'Sí. Podemos sumar botones a tu WhatsApp para consultas o pedidos, y enlaces a tu Instagram.' },
-  { q: '¿Necesito comprar un dominio?', a: 'No es obligatorio, pero lo recomendamos para que tu web tenga una dirección propia, como tumarca.com.ar. Te ayudamos a elegirlo.' },
-  { q: '¿Hay costos aparte del diseño?', a: 'El dominio y, según la plataforma, el alojamiento de la web pueden tener costos propios. Te explicamos cuáles aplican a tu proyecto antes de empezar.' },
-  { q: '¿Qué necesito tener preparado para empezar?', a: 'Información de tu negocio, fotos, textos y, si es una tienda, tus productos con precios. Si te falta algo, lo charlamos en la primera reunión.' },
-  { q: '¿Puedo sumar productos o secciones más adelante?', a: 'Sí. Tu web puede crecer con tu negocio. Lo que se agregue después se cotiza según lo que necesites.' },
+  { q: '¿Cuánto cuesta?', a: 'Los proyectos arrancan desde $40.000. Antes de empezar te paso un presupuesto cerrado según lo que necesites.' },
+  { q: '¿Cuánto tarda en estar lista?', a: 'Depende del tipo de web y de las funciones que necesites. Te doy un tiempo estimado en la propuesta, antes de empezar.' },
+  { q: '¿Puedo actualizarla yo después?', a: 'Depende de cómo se arme tu web. Antes de empezar te cuento qué vas a poder cambiar por tu cuenta.' },
+  { q: '¿Hay costos aparte del diseño?', a: 'El dominio y, según la plataforma, el alojamiento pueden tener costos propios. Te explico cuáles aplican antes de empezar.' },
 ];
 
 /* ---------- Formulario ---------- */
