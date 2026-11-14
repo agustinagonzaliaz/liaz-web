@@ -24,7 +24,9 @@ export default function Footer() {
             <a className="link" href={`mailto:${site.email}`}>{site.email}</a>
           </div>
         </div>
-        <Link className="footer__mark" href="/" aria-label="liaz, volver al inicio">liaz</Link>
+        <Link className="footer__mark" href="/" aria-label="liaz, volver al inicio">
+          {'liaz'.split('').map((l, i) => <span key={i} aria-hidden="true">{l}</span>)}
+        </Link>
         <div className="footer__legal">
           <Link className="link" href="/privacidad">Política de privacidad</Link>
           <Link className="link" href="/terminos">Términos y condiciones</Link>

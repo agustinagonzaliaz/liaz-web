@@ -120,10 +120,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
    un brillo que la recorre y un color que cambia despacio. Siempre detrás del contenido. */
 .biga { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .biga__glow { position: absolute; inset: 0; opacity: .55; background: radial-gradient(min(60vw, 720px) circle at var(--mx) var(--my), var(--accent), transparent 70%); }
-.biga__a { position: absolute; right: max(16px, calc((100vw - 1280px) / 2 + 8px)); top: 50%; font-family: var(--display); font-weight: 700; font-size: clamp(420px, 50vw, 760px); line-height: 1; letter-spacing: -0.04em; user-select: none;
-  color: transparent; background: linear-gradient(115deg, var(--accent) 0%, var(--accent) 44%, rgba(255, 255, 255, .92) 50%, var(--accent) 56%, var(--accent) 100%); background-size: 320% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text;
-  translate: calc(var(--px) * -40px) calc(-58% + var(--py) * -28px); transition: translate .9s var(--ease);
-  animation: aIn 1.4s var(--ease) both, aSheen 8s ease-in-out 1.8s infinite; }
+.biga__letter { position: absolute; right: max(16px, calc((100vw - 1280px) / 2 + 8px)); top: 50%; font-family: var(--display); font-weight: 700; font-size: clamp(420px, 50vw, 760px); line-height: 1; letter-spacing: -0.04em; user-select: none;
+  translate: 0 -58%; transform: perspective(1100px) rotateY(calc(var(--px) * 16deg)) rotateX(calc(var(--py) * -12deg)); transition: transform .9s var(--ease); animation: aIn 1.4s var(--ease) both; }
+.biga__a { display: block; position: relative; color: transparent; background: linear-gradient(115deg, var(--accent) 0%, var(--accent) 44%, rgba(255, 255, 255, .92) 50%, var(--accent) 56%, var(--accent) 100%); background-size: 320% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; animation: aSheen 8s ease-in-out 1.8s infinite, aFloat 9s ease-in-out infinite; }
+/* Segunda capa, corrida y más oscura: le da volumen a la letra y se mueve al revés que el mouse */
+.biga__a--depth { position: absolute; inset: 0; background: none; -webkit-background-clip: border-box; background-clip: border-box; color: color-mix(in srgb, var(--accent) 62%, var(--chocolate)); opacity: .3; translate: calc(18px + var(--px) * 30px) calc(16px + var(--py) * 22px); transition: translate .9s var(--ease); animation: aFloat 9s ease-in-out infinite; }
+@keyframes aFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes aIn { from { opacity: 0; scale: .95; } to { opacity: 1; scale: 1; } }
 @keyframes aSheen { 0%, 60% { background-position: 100% 0; } 88%, 100% { background-position: 0% 0; } }
 /* Entrada de la portada: un solo momento, en orden */
@@ -159,21 +161,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .frame--lila { background: var(--lila); }
 .frame--crema { background: var(--crema); }
 .frame--none { border-radius: 0; overflow: visible; }
-.duo__browser { position: absolute; left: 7%; top: 11%; width: 78%; aspect-ratio: 16 / 10.4; display: flex; flex-direction: column; border-radius: 10px; background: var(--papel); overflow: hidden; box-shadow: 0 34px 60px -34px rgba(94, 64, 53, .55); transition: transform .7s var(--ease); }
+.duo { --tx: 0; --ty: 0; }
+.duo__browser { position: absolute; left: 7%; top: 11%; width: 78%; aspect-ratio: 16 / 10.4; display: flex; flex-direction: column; border-radius: 10px; background: var(--papel); overflow: hidden; box-shadow: calc(var(--tx) * -24px) calc(34px + var(--ty) * -16px) 60px -34px rgba(94, 64, 53, .55); transform: perspective(1100px) rotateY(calc(var(--tx) * 7deg)) rotateX(calc(var(--ty) * -6deg)); transition: transform .7s var(--ease), box-shadow .7s var(--ease); }
 .duo__bar { flex: none; display: flex; gap: 6px; padding: 9px 12px; background: var(--crema); }
 .duo__bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--linea); }
 .duo__screen { position: relative; flex: 1; width: 100%; height: 100%; overflow: hidden; }
-.duo__phone { position: absolute; right: 6%; bottom: -5%; width: 22%; aspect-ratio: 9 / 19.5; padding: 4px; border-radius: 22px; background: var(--chocolate); box-shadow: 0 26px 44px -22px rgba(94, 64, 53, .65); transition: transform .7s var(--ease); }
+.duo__phone { position: absolute; right: 6%; bottom: -5%; width: 22%; aspect-ratio: 9 / 19.5; padding: 4px; border-radius: 22px; background: var(--chocolate); box-shadow: 0 26px 44px -22px rgba(94, 64, 53, .65); transform: perspective(1100px) rotateY(calc(var(--tx) * 11deg)) rotateX(calc(var(--ty) * -9deg)) translate3d(calc(var(--tx) * -18px), calc(var(--ty) * -14px), 0); transition: transform .7s var(--ease); }
 .duo__phone .duo__screen { border-radius: 18px; background: var(--papel); }
 .duo__img { object-fit: cover; object-position: 50% 0%; }
 .duo--scroll .duo__img { animation: shotScroll 16s ease-in-out 1.2s infinite alternate; }
 .duo--scroll .duo__phone .duo__img { animation-duration: 12s; }
 @keyframes shotScroll { 0%, 10% { object-position: 50% 0%; } 90%, 100% { object-position: 50% 100%; } }
-@media (hover: hover) {
-  a:hover > .frame .duo__browser, .offer__card:hover .duo__browser { transform: translateY(-8px); }
-  a:hover > .frame .duo__phone, .offer__card:hover .duo__phone { transform: translateY(-16px); }
-}
-
 /* ---------- Servicios ---------- */
 .offer { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px) var(--gap); }
 .offer__card { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
@@ -311,6 +309,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer__h { font-size: 14px; font-weight: 500; color: var(--chocolate); margin-bottom: 4px; }
 .footer > .wrap { container-type: inline-size; }
 .footer__mark { display: block; width: fit-content; margin-top: clamp(40px, 6vw, 80px); margin-left: -.045em; font-family: var(--display); font-weight: 700; font-size: 30vw; font-size: 61.5cqw; line-height: .78; letter-spacing: -0.055em; color: var(--chocolate); text-decoration: none; user-select: none; }
+.footer__mark span { display: inline-block; }
 .footer__legal { display: flex; flex-wrap: wrap; gap: 8px 28px; padding-block: 22px 26px; margin-top: clamp(20px, 3vw, 36px); border-top: 1px solid var(--linea); font-size: 14px; }
 .footer__legal span { margin-left: auto; }
 
@@ -328,6 +327,55 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .float-wa { position: fixed; z-index: 30; right: max(24px, env(safe-area-inset-right, 0px)); bottom: max(24px, env(safe-area-inset-bottom, 0px)); box-shadow: 0 12px 28px -10px rgba(94, 64, 53, .6); opacity: 0; visibility: hidden; transform: translateY(16px); transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s, background-color .3s var(--ease); }
 .float-wa.is-shown { opacity: 1; visibility: visible; transform: none; transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s, background-color .3s var(--ease); }
 
+/* ---------- Transiciones ---------- */
+/* Cada sección entra como una hoja con las puntas redondeadas, apoyada sobre la anterior */
+:root { --sheet: clamp(24px, 3.2vw, 44px); }
+main > .section, main > section.on-dark, .footer { position: relative; border-radius: var(--sheet) var(--sheet) 0 0; margin-top: calc(var(--sheet) * -1); }
+main > .section, main > .hero, main > .page-hero { padding-bottom: calc(clamp(80px, 11vw, 152px) + var(--sheet)); }
+main > .hero { padding-bottom: var(--sheet); }
+main > .page-hero { padding-bottom: calc(clamp(56px, 7vw, 104px) + var(--sheet)); }
+main > .section:not(.section--papel):not(.section--celeste):not(.on-dark) { background: var(--crema); }
+/* Al cambiar de página, el contenido aparece suave */
+main { animation: pageIn .5s var(--ease) both; }
+@keyframes pageIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Animaciones atadas al scroll: avanzan y retroceden con el dedo o la rueda.
+   Solo donde el navegador las soporta; en el resto, todo se ve quieto y completo. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* La "a" se aleja y gira apenas mientras bajás */
+    .biga { animation: heroAway linear both; animation-timeline: scroll(root); animation-range: 0 90vh; }
+    @keyframes heroAway { to { transform: translateY(18vh) rotate(-7deg) scale(.92); opacity: .5; } }
+    /* Títulos: suben y se asientan */
+    .section .h2, .feature__text .display, .contact__text .display, .cta .display { animation: headIn linear both; animation-timeline: view(); animation-range: entry 5% entry 75%; }
+    @keyframes headIn { from { opacity: 0; transform: translateY(.5em); } }
+    /* Marcos de pantalla: se levantan en 3D, como una hoja que se apoya */
+    .frame { animation: frameIn linear both; animation-timeline: view(); animation-range: entry 0% cover 32%; transform-origin: 50% 100%; }
+    @keyframes frameIn { from { opacity: .35; transform: perspective(1400px) rotateX(16deg) scale(.93); } }
+    /* El celular flota a otra velocidad que la compu */
+    .duo__phone { animation: phoneDrift linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+    @keyframes phoneDrift { from { translate: 0 34px; } to { translate: 0 -34px; } }
+    /* Renglones y pasos: la línea se dibuja */
+    .step { border-top-color: transparent; position: relative; }
+    .step::before { content: ""; position: absolute; left: 0; right: 0; top: -1.5px; height: 1.5px; background: var(--chocolate); transform-origin: left; animation: lineIn linear both; animation-timeline: view(); animation-range: entry 10% cover 28%; }
+    .step:nth-child(2)::before { animation-range: entry 25% cover 36%; }
+    .step:nth-child(3)::before { animation-range: entry 40% cover 44%; }
+    @keyframes lineIn { from { transform: scaleX(0); } }
+    .step__n { animation: numIn linear both; animation-timeline: view(); animation-range: entry 10% cover 34%; }
+    @keyframes numIn { from { opacity: 0; transform: translateY(40%) rotateX(60deg); } }
+    /* Opciones del diagnóstico y dudas: entran en escalera */
+    .diag__tab, .faq__item { animation: rowIn linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
+    @keyframes rowIn { from { opacity: 0; transform: translateX(-18px); } }
+    .diag__panel { animation: panelIn .5s var(--ease) both; }
+    /* Pie: el logo sube letra por letra */
+    .footer__mark span { animation: letterUp linear both; animation-timeline: view(); animation-range: entry 0% entry 80%; }
+    .footer__mark span:nth-child(2) { animation-range: entry 8% entry 88%; }
+    .footer__mark span:nth-child(3) { animation-range: entry 16% entry 96%; }
+    .footer__mark span:nth-child(4) { animation-range: entry 24% entry 104%; }
+    @keyframes letterUp { from { opacity: 0; transform: translateY(45%); } }
+  }
+}
+
 /* ---------- Tablet ---------- */
 @media (max-width: 1000px) {
   .menu-btn { display: inline-flex; }
@@ -340,7 +388,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .hero__text { max-width: 66%; }
   .hero__index { display: flex; }
   .hero__from { display: none; }
-  .biga__a { right: 0; font-size: 50vw; }
+  .biga__letter { right: 0; font-size: 50vw; }
   .diag, .contact, .feature, .page-hero__grid { grid-template-columns: minmax(0, 1fr); }
   .contact__text, .form-wrap, .feature__text, .feature__media, .page-hero__text, .page-hero__media, .case__info, .case__list { grid-column: 1 / -1; }
   .footer__lead { grid-column: 1 / -1; }
@@ -358,7 +406,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .hero__inner { min-height: 0; }
   .hero__text { max-width: none; padding-bottom: 54vw; }
   /* La "a" entera, abajo a la derecha, detrás del texto */
-  .biga__a { top: auto; bottom: 132px; right: 3vw; font-size: 78vw; translate: 0 22%; }
+  .biga__letter { top: auto; bottom: 132px; right: 3vw; font-size: 78vw; translate: 0 22%; }
   .biga__glow { --mx: 74%; --my: 78%; }
   .hero__foot { flex-direction: column; align-items: flex-start; }
   .hero__place { display: none; }
@@ -383,6 +431,4 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .biga__a { translate: 0 -58%; }
 }
-@media (prefers-reduced-motion: reduce) and (max-width: 700px) { .biga__a { translate: 0 22%; } }

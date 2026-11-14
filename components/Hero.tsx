@@ -58,7 +58,10 @@ export default function Hero() {
     >
       <div className="biga" aria-hidden="true">
         <span className="biga__glow" />
-        <span className="biga__a">a</span>
+        <span className="biga__letter">
+          <span className="biga__a biga__a--depth">a</span>
+          <span className="biga__a">a</span>
+        </span>
       </div>
       <div className="wrap hero__inner">
         <div className="hero__text">
