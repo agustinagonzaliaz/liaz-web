@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { legal } from '@/lib/legal';
 
 /**
  * Recibe el formulario y lo envía por mail con Resend (resend.com).
@@ -32,9 +33,28 @@ export async function POST(req: Request) {
     tipo: clean(body.tipo, 60),
     mensaje: clean(body.mensaje, 2000),
   };
-  if (data.nombre.length < 2 || data.negocio.length < 2 || data.dato.length < 5 || !data.tipo) {
+  if (data.nombre.length < 2 || data.dato.length < 5 || !data.tipo) {
     return NextResponse.json({ ok: false, error: 'invalid' }, { status: 422 });
   }
+  // Sin las dos aceptaciones no se envía nada.
+  if (body.aceptaTerminos !== true || body.aceptaPrivacidad !== true) {
+    return NextResponse.json({ ok: false, error: 'consent' }, { status: 422 });
+  }
+
+  /* Constancia de aceptación: cuándo y cómo aceptó. Viaja en el mismo mail de la consulta,
+     que es el registro. No se guardan IP ni datos del navegador: no hacen falta. */
+  const now = new Date();
+  const fechaAr = new Intl.DateTimeFormat('es-AR', { dateStyle: 'full', timeStyle: 'medium', timeZone: 'America/Argentina/Cordoba' }).format(now);
+  const constancia = [
+    '---',
+    'CONSTANCIA DE ACEPTACIÓN',
+    `Fecha y hora: ${fechaAr} (hora de Argentina)`,
+    `Registro técnico: ${now.toISOString()}`,
+    'Cómo aceptó: marcó dos casillas separadas en el formulario de contacto del sitio. Las casillas aparecen sin marcar.',
+    `1. "Leí y acepto los Términos y condiciones." (versión ${legal.version})`,
+    `2. "Leí y acepto la Política de privacidad." (versión ${legal.version})`,
+    `Quién: ${data.nombre}, contacto por ${data.medio}: ${data.dato}`,
+  ].join('\n');
 
   const key = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
@@ -45,12 +65,14 @@ export async function POST(req: Request) {
 
   const text = [
     `Nombre: ${data.nombre}`,
-    `Negocio: ${data.negocio}`,
+    `Negocio: ${data.negocio || '-'}`,
     `Instagram o web: ${data.redes || '-'}`,
     `Contacto (${data.medio}): ${data.dato}`,
     `Tipo de web: ${data.tipo}`,
     '',
     data.mensaje || '(sin mensaje)',
+    '',
+    constancia,
   ].join('\n');
 
   try {
@@ -60,7 +82,7 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         from: process.env.CONTACT_FROM_EMAIL || 'liaz web <onboarding@resend.dev>',
         to: [to],
-        subject: `Nueva consulta: ${data.negocio} (${data.tipo})`,
+        subject: `Nueva consulta: ${data.negocio || data.nombre} (${data.tipo})`,
         text,
         ...(data.medio === 'email' ? { reply_to: data.dato } : {}),
       }),

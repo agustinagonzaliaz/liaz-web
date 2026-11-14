@@ -8,13 +8,13 @@ import { projectTypes } from '@/lib/content';
 type Fields = { nombre: string; negocio: string; redes: string; medio: string; dato: string; tipo: string; mensaje: string };
 type Errors = Partial<Record<keyof Fields, string>>;
 type Status = 'idle' | 'sending' | 'sent' | 'error';
+type Accept = { terminos: boolean; privacidad: boolean };
 
 const empty: Fields = { nombre: '', negocio: '', redes: '', medio: 'whatsapp', dato: '', tipo: '', mensaje: '' };
 
 function validate(f: Fields): Errors {
   const e: Errors = {};
   if (f.nombre.trim().length < 2) e.nombre = 'Escribí tu nombre.';
-  if (f.negocio.trim().length < 2) e.negocio = 'Escribí el nombre de tu negocio o emprendimiento.';
   if (f.medio === 'email') {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.dato.trim())) e.dato = 'Revisá tu mail: falta algo, por ejemplo la @.';
   } else if (f.dato.replace(/\D/g, '').length < 8) {
@@ -36,6 +36,9 @@ export default function Contacto() {
   const [fields, setFields] = useState<Fields>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>('idle');
+  /* Aceptación de Términos y de Privacidad: dos casillas separadas, sin marcar por defecto. */
+  const [accept, setAccept] = useState<Accept>({ terminos: false, privacidad: false });
+  const [acceptError, setAcceptError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
@@ -49,9 +52,15 @@ export default function Contacto() {
     e.preventDefault();
     const found = validate(fields);
     setErrors(found);
+    const missing = !accept.terminos || !accept.privacidad;
+    setAcceptError(missing);
     const first = Object.keys(found)[0];
     if (first) {
       formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
+    if (missing) {
+      formRef.current?.querySelector<HTMLElement>(`[name="${accept.terminos ? 'aceptaPrivacidad' : 'aceptaTerminos'}"]`)?.focus();
       return;
     }
     setStatus('sending');
@@ -60,7 +69,7 @@ export default function Contacto() {
       const res = await fetch('/api/contacto', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...fields, empresa: honeypot }),
+        body: JSON.stringify({ ...fields, empresa: honeypot, aceptaTerminos: accept.terminos, aceptaPrivacidad: accept.privacidad }),
       });
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean };
       if (!res.ok || !data.ok) throw new Error('send failed');
@@ -110,9 +119,8 @@ export default function Contacto() {
                   {err('nombre')}
                 </div>
                 <div className="field">
-                  <label htmlFor="f-negocio">Tu negocio o emprendimiento</label>
+                  <label htmlFor="f-negocio">Tu negocio o emprendimiento <span className="field__opt">(opcional)</span></label>
                   <input type="text" autoComplete="organization" {...fieldProps('negocio')} />
-                  {err('negocio')}
                 </div>
               </div>
               <div className="field">
@@ -154,12 +162,39 @@ export default function Contacto() {
                 <label htmlFor="f-mensaje">Contame brevemente qué buscás <span className="field__opt">(opcional)</span></label>
                 <textarea rows={3} {...fieldProps('mensaje')} />
               </div>
+              <fieldset className="field consent">
+                <legend className="sr-only">Aceptación de los términos y de la política de privacidad</legend>
+                <label className="check">
+                  <input
+                    type="checkbox"
+                    name="aceptaTerminos"
+                    checked={accept.terminos}
+                    onChange={(e) => setAccept((a) => ({ ...a, terminos: e.target.checked }))}
+                    aria-invalid={acceptError && !accept.terminos ? true : undefined}
+                    aria-describedby={acceptError ? 'e-acepta' : undefined}
+                  />
+                  <span>Leí y acepto los <Link href="/terminos" target="_blank">Términos y condiciones</Link>.</span>
+                </label>
+                <label className="check">
+                  <input
+                    type="checkbox"
+                    name="aceptaPrivacidad"
+                    checked={accept.privacidad}
+                    onChange={(e) => setAccept((a) => ({ ...a, privacidad: e.target.checked }))}
+                    aria-invalid={acceptError && !accept.privacidad ? true : undefined}
+                    aria-describedby={acceptError ? 'e-acepta' : undefined}
+                  />
+                  <span>Leí y acepto la <Link href="/privacidad" target="_blank">Política de privacidad</Link>.</span>
+                </label>
+                {acceptError && (!accept.terminos || !accept.privacidad) && (
+                  <p className="field__error" id="e-acepta">Para enviar la consulta, marcá las dos casillas.</p>
+                )}
+              </fieldset>
               <button className="btn btn--crema" type="submit" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Enviando…' : 'Enviar consulta'}
               </button>
               <p className="form__legal">
-                Uso tus datos solo para responder tu consulta. Más información en la{' '}
-                <Link href="/privacidad">Política de privacidad</Link>.
+                Uso tus datos solo para responder tu consulta. Guardo la fecha y la hora de tu aceptación como constancia.
               </p>
               {status === 'error' && (
                 <div className="result result--error" ref={resultRef} tabIndex={-1} role="alert">

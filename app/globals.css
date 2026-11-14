@@ -219,6 +219,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @media (hover: hover) { .segmented__opt:hover span { border-color: var(--crema); } }
 .segmented__opt input:checked + span { background: var(--crema); color: var(--chocolate); border-color: var(--crema); }
 .segmented__opt input:focus-visible + span { outline: 3px solid var(--celeste); outline-offset: 2px; }
+.consent { gap: 12px; }
+.check { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; line-height: 1.45; cursor: pointer; }
+.check input { appearance: none; -webkit-appearance: none; flex: none; position: relative; width: 24px; height: 24px; margin: 0; border: 1.5px solid var(--linea-clara); border-radius: 7px; background: transparent; cursor: pointer; transition: background-color .2s var(--ease), border-color .2s var(--ease); }
+.check input::after { content: ""; position: absolute; left: 7px; top: 3px; width: 6px; height: 11px; border: solid var(--chocolate); border-width: 0 2px 2px 0; transform: rotate(45deg) scale(0); transition: transform .2s var(--ease); }
+.check input:checked { background: var(--crema); border-color: var(--crema); }
+.check input:checked::after { transform: rotate(45deg) scale(1); }
+.check input:hover { border-color: var(--crema); }
+.check input[aria-invalid="true"] { border-color: var(--error-claro); }
+.check a { color: inherit; text-underline-offset: 3px; }
 .form .btn { align-self: flex-start; }
 .form__legal { font-size: 13px; }
 .form__legal a { color: inherit; text-underline-offset: 3px; }

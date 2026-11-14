@@ -28,6 +28,7 @@ export default function Footer() {
         <div className="footer__legal">
           <Link className="link" href="/privacidad">Política de privacidad</Link>
           <Link className="link" href="/terminos">Términos y condiciones</Link>
+          <Link className="link" href="/cookies">Política de cookies</Link>
           <span>© {new Date().getFullYear()} liaz</span>
         </div>
       </div>

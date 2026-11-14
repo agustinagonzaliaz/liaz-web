@@ -6,5 +6,8 @@ export const legal = {
   responsable: 'Agustina Gonzaliaz',
   cuit: '27447214186',
   ciudad: 'Córdoba, Argentina',
-  actualizado: 'noviembre de 2026',
+  actualizado: '14 de noviembre de 2026',
+  /** Versión de los textos legales. Cambiala cada vez que modifiques los Términos o la Política de privacidad:
+   *  queda guardada en la constancia de aceptación de cada consulta. */
+  version: '2026-11-14',
 };

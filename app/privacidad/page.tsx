@@ -25,11 +25,20 @@ export default function Privacidad() {
       <p>Solo los que me enviás de forma voluntaria a través del formulario de contacto:</p>
       <ul>
         <li>tu nombre;</li>
-        <li>el nombre de tu negocio o emprendimiento;</li>
+        <li>el nombre de tu negocio o emprendimiento, si lo indicás;</li>
         <li>tu Instagram o sitio web, si lo indicás;</li>
         <li>tu número de WhatsApp o tu mail, según cómo prefieras que te contacte;</li>
-        <li>el tipo de web que te interesa y el mensaje que me escribas.</li>
+        <li>el tipo de web que te interesa y el mensaje que me escribas, si escribís uno.</li>
       </ul>
+      <p>
+        Solo son obligatorios tu nombre, un medio de contacto y el tipo de web que te interesa: es lo mínimo que
+        necesito para responderte. No te pido datos sensibles.
+      </p>
+      <p>
+        Al enviar el formulario aceptás, con dos casillas separadas, los Términos y condiciones y esta política. Junto
+        con tu consulta guardo una constancia de esa aceptación: la fecha y la hora, el texto de cada casilla y la versión
+        de los documentos. No guardo tu dirección IP ni datos de tu navegador.
+      </p>
       <p>
         Si me escribís por WhatsApp desde los botones del sitio, la conversación se rige además por las políticas de
         WhatsApp.
@@ -48,19 +57,20 @@ export default function Privacidad() {
         proveedores pueden procesar los datos en servidores ubicados fuera de Argentina, solo para prestarme su servicio.
       </p>
       <p>
-        Este sitio no usa cookies de publicidad ni herramientas para rastrear tu actividad. Si en el futuro sumo
-        herramientas de estadísticas, voy a actualizar esta política.
+        Este sitio no usa cookies ni herramientas para rastrear tu actividad. El detalle está en la{' '}
+        <Link href="/cookies">Política de cookies</Link>.
       </p>
 
       <h2>5. Cuánto tiempo los guardo</h2>
       <p>
-        Conservo tus datos mientras sean necesarios para responder tu consulta o para el proyecto que hagamos juntos.
-        Después los elimino, salvo que la ley me obligue a conservarlos.
+        Conservo tus datos y la constancia de aceptación mientras sean necesarios para responder tu consulta o para el
+        proyecto que hagamos juntos. Después los elimino, salvo que la ley me obligue a conservarlos.
       </p>
 
       <h2>6. Tus derechos</h2>
       <p>
-        Podés pedirme en cualquier momento acceder a tus datos, corregirlos, actualizarlos o eliminarlos. Escribime a{' '}
+        Podés pedirme en cualquier momento acceder a tus datos, corregirlos, actualizarlos o eliminarlos, y también
+        retirar tu consentimiento. Escribime a{' '}
         <a href={`mailto:${site.email}`}>{site.email}</a> y te respondo dentro de los plazos que establece la ley. El
         derecho de acceso es gratuito y puede ejercerse en intervalos no menores a seis meses, salvo que acredites un
         interés legítimo.
