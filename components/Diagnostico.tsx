@@ -1,45 +1,58 @@
 'use client';
 
-import { useState } from 'react';
-import Reveal from './Reveal';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import { pains } from '@/lib/content';
 import WaButton from './WaButton';
 
 /** "¿Qué te pasa hoy?": cada opción muestra una respuesta a medida y un contacto con mensaje propio. */
 export default function Diagnostico() {
-  const [selected, setSelected] = useState(pains[0].id);
-  const pain = pains.find((p) => p.id === selected) ?? pains[0];
+  const [selected, setSelected] = useState(0);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const pain = pains[selected];
+
+  /* Se recorre con las flechas, como cualquier grupo de pestañas. */
+  const onKey = (e: KeyboardEvent<HTMLButtonElement>) => {
+    const last = pains.length - 1;
+    let next = -1;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = selected === last ? 0 : selected + 1;
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = selected === 0 ? last : selected - 1;
+    if (e.key === 'Home') next = 0;
+    if (e.key === 'End') next = last;
+    if (next < 0) return;
+    e.preventDefault();
+    setSelected(next);
+    tabs.current[next]?.focus();
+  };
 
   return (
-    <section id="diagnostico" className="section section--white">
-      <div className="wrap stack">
-        <Reveal className="head">
-          <p className="eyebrow">¿es para vos?</p>
-          <h2 className="h2">¿Qué te pasa hoy con tu emprendimiento?</h2>
-        </Reveal>
-        <div className="diag">
-          <div className="diag__options" role="radiogroup" aria-label="Elegí lo que te pasa hoy">
-            {pains.map((p) => {
-              const on = p.id === selected;
-              return (
-                <button
-                  key={p.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={on}
-                  className="diag__option"
-                  onClick={() => setSelected(p.id)}
-                >
-                  <span className="diag__check" aria-hidden="true" />
-                  {p.label}
-                </button>
-              );
-            })}
+    <section id="diagnostico" className="section section--papel">
+      <div className="wrap cols">
+        <h2 className="h2 cols__full" id="diag-title">¿Qué te pasa hoy con tu emprendimiento?</h2>
+        <div className="diag cols__full">
+          <div className="diag__tabs" role="tablist" aria-labelledby="diag-title" aria-orientation="vertical">
+            {pains.map((p, i) => (
+              <button
+                key={p.id}
+                ref={(el) => { tabs.current[i] = el; }}
+                type="button"
+                role="tab"
+                id={`diag-tab-${p.id}`}
+                aria-selected={i === selected}
+                aria-controls="diag-panel"
+                tabIndex={i === selected ? 0 : -1}
+                className="diag__tab"
+                onClick={() => setSelected(i)}
+                onKeyDown={onKey}
+              >
+                <span className="diag__dot" aria-hidden="true" />
+                {p.label}
+              </button>
+            ))}
           </div>
-          <div className="diag__answer" aria-live="polite" key={pain.id}>
-            <h3 className="h3 h3--lg">{pain.title}</h3>
+          <div className="diag__panel" role="tabpanel" id="diag-panel" aria-labelledby={`diag-tab-${pain.id}`} key={pain.id}>
+            <h3 className="h3">{pain.title}</h3>
             <p>{pain.text}</p>
-            <ul className="diag__points">
+            <ul className="rows">
               {pain.points.map((pt) => <li key={pt}>{pt}</li>)}
             </ul>
             <WaButton message={pain.wa}>{pain.cta}</WaButton>

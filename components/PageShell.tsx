@@ -2,19 +2,19 @@ import type { ReactNode } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import FloatingWhatsApp from './FloatingWhatsApp';
-import ContactBlock from './ContactBlock';
+import ContactCta from './ContactCta';
 
-/** Estructura común de las páginas internas: encabezado, contenido, bloque de contacto y pie. */
-export default function PageShell({ children, message }: { children: ReactNode; message?: string }) {
+/** Estructura común de las páginas internas: encabezado, contenido, cierre de contacto y pie. */
+export default function PageShell({ children, message, cta = true }: { children: ReactNode; message?: string; cta?: boolean }) {
   return (
     <>
       <Header />
       <main id="contenido">
         {children}
-        <ContactBlock message={message} />
+        {cta && <ContactCta message={message} />}
       </main>
       <Footer />
-      <FloatingWhatsApp />
+      {cta && <FloatingWhatsApp />}
     </>
   );
 }

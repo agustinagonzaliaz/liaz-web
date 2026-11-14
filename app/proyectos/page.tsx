@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import PageShell from '@/components/PageShell';
-import Reveal from '@/components/Reveal';
 import Showcase from '@/components/Showcase';
 import { projects } from '@/lib/content';
 import { pageMeta } from '@/lib/seo';
@@ -13,35 +12,37 @@ export const metadata: Metadata = pageMeta('/proyectos', title, description);
 export default function ProyectosPage() {
   return (
     <PageShell>
-      <section className="section page-top">
-        <div className="wrap stack">
-          <Reveal className="head">
-            <p className="eyebrow">proyectos</p>
-            <h1 className="h2 h2--xl">Diseños con identidad propia.</h1>
-            <p className="head__intro">Cada web nace de un negocio distinto. Así se ve por dentro un proyecto en el que estoy trabajando.</p>
-          </Reveal>
-          {projects.map((p) => (
-            <Reveal key={p.id} className="case">
+      <section className="page-hero">
+        <div className="wrap">
+          <div className="page-hero__intro">
+            <h1 className="display display--page">Diseños con identidad propia.</h1>
+            <p className="lead">Cada web nace de un negocio distinto. Así se ve por dentro un proyecto en el que estoy trabajando.</p>
+          </div>
+        </div>
+      </section>
+      <section className="section section--papel">
+        {projects.map((p) => (
+          <article key={p.id} className="wrap case">
+            <div className="case__stage">
               <Showcase
                 name={p.name}
                 screens={(p.showcase ?? []).map((s) => ({ label: s.label, desktop: s.desktop || undefined, mobile: s.mobile || undefined }))}
               />
-              <div className="project__info">
-                <div className="project__meta">
-                  <span className="badge badge--real">Proyecto real</span>
-                  {p.status && <span className="badge badge--status">{p.status}</span>}
-                </div>
-                <p className="project__type">{p.type}</p>
-                <h2 className="h3 h3--xl">{p.name}</h2>
-                <p>{p.text}</p>
-                <p className="features__label">Qué incluye</p>
-                <ul className="project__features">
-                  {p.features.map((f) => <li key={f}>{f}</li>)}
-                </ul>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+            </div>
+            <div className="case__info">
+              <p className="status">Proyecto real{p.status ? `, ${p.status.toLowerCase()}` : ''}</p>
+              <h2 className="h2">{p.name}</h2>
+              <p className="small">{p.type}</p>
+              <p>{p.text}</p>
+            </div>
+            <div className="case__list">
+              <h3 className="h4">Qué incluye</h3>
+              <ul className="rows rows--two small">
+                {p.features.map((f) => <li key={f}>{f}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
       </section>
     </PageShell>
   );

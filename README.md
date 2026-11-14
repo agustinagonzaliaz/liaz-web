@@ -40,3 +40,12 @@ Mientras no esté configurado, el formulario muestra un error honesto y ofrece m
 3. Cada vez que subas cambios a GitHub, la web se actualiza sola.
 
 Cuando tengas dominio, conectalo en **Settings → Domains** y cambiá `siteUrl` en `lib/config.ts`.
+
+## Sistema de diseño
+
+- **Colores:** crema (papel), chocolate (tinta) y celeste como color firma; durazno y lila como acentos. Están al principio de `app/globals.css`.
+- **Tipografías:** Syne para títulos y DM Sans para lectura.
+- **La "a" de la portada:** `components/Hero.tsx` (cambia de color sola y sigue al mouse).
+- **Marcos de compu + celular:** `components/DeviceDuo.tsx`. Se usa en servicios y en Kalos.
+- **Pie de página** con el logo gigante: `components/Footer.tsx`.
+- **Página de error 404:** `app/not-found.tsx`.

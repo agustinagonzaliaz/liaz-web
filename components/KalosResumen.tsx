@@ -1,29 +1,29 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import Reveal from './Reveal';
+import DeviceDuo from './DeviceDuo';
 import { projects } from '@/lib/content';
 
 export default function KalosResumen() {
   const p = projects[0];
   return (
     <section id="proyectos" className="section section--celeste">
-      <div className="wrap kalos">
-        <Reveal className="kalos__phone">
-          <div className="phone">
-            <div className="phone__screen">
-              <Image src="/proyectos/kalos-inicio-cel.webp" alt={`${p.name} en el celular`} fill sizes="260px" className="phone__img" />
-            </div>
-          </div>
-        </Reveal>
-        <Reveal className="kalos__text" delay={100}>
-          <div className="project__meta">
-            <span className="badge badge--real">Proyecto real</span>
-            {p.status && <span className="badge badge--status">{p.status}</span>}
-          </div>
-          <h2 className="h2">{p.name}</h2>
+      <div className="wrap feature">
+        <div className="feature__text">
+          <p className="status">Proyecto real{p.status ? `, ${p.status.toLowerCase()}` : ''}</p>
+          <h2 className="display display--page">{p.name}</h2>
           <p className="lead">{p.summary}</p>
           <Link className="btn btn--dark" href="/proyectos">Ver el proyecto completo</Link>
-        </Reveal>
+        </div>
+        <Link className="feature__media" href="/proyectos" aria-label={`Ver el proyecto ${p.name}`} tabIndex={-1}>
+          <DeviceDuo
+            tone="none"
+            scroll
+            desktop="/proyectos/kalos-inicio.webp"
+            mobile="/proyectos/kalos-producto-cel.webp"
+            altDesktop={`${p.name}: página de inicio, en computadora`}
+            altMobile={`${p.name}: ficha de producto, en el celular`}
+            sizes="(max-width: 1000px) 90vw, 50vw"
+          />
+        </Link>
       </div>
     </section>
   );

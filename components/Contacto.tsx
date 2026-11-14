@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useRef, useState, type FormEvent } from 'react';
-import Reveal from './Reveal';
 import WaButton from './WaButton';
 import { projectTypes } from '@/lib/content';
 
@@ -19,7 +18,7 @@ function validate(f: Fields): Errors {
   if (f.medio === 'email') {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.dato.trim())) e.dato = 'Revisá tu mail: falta algo, por ejemplo la @.';
   } else if (f.dato.replace(/\D/g, '').length < 8) {
-    e.dato = 'Escribí tu número con código de área, por ejemplo 11 2345 6789.';
+    e.dato = 'Escribí tu número con código de área, por ejemplo 351 234 5678.';
   }
   if (!f.tipo) e.tipo = 'Elegí qué tipo de web te interesa.';
   return e;
@@ -83,18 +82,22 @@ export default function Contacto() {
   const err = (k: keyof Fields) => errors[k] && <p className="field__error" id={`e-${k}`}>{errors[k]}</p>;
 
   return (
-    <section id="contacto" className="section section--choco" data-hide-float>
+    <section id="contacto" className="section on-dark" data-hide-float>
       <div className="wrap contact">
-        <Reveal className="contact__text">
-          <p className="eyebrow">hablemos</p>
-          <h2 className="h2 h2--xl">Contame sobre tu negocio.</h2>
+        <div className="contact__text">
+          <h2 className="display display--page">Contame sobre tu negocio.</h2>
           <p className="lead">Completá el formulario y te respondo para charlar sobre tu web.</p>
-        </Reveal>
+          <ul className="rows small">
+            <li>Presupuesto cerrado antes de empezar</li>
+            <li>Proyectos desde $40.000</li>
+            <li>Te enseño a usar tu web cuando está lista</li>
+          </ul>
+        </div>
 
         <div className="form-wrap">
           {status === 'sent' ? (
             <div className="result result--ok" ref={resultRef} tabIndex={-1} role="status">
-              <h3 className="h3 h3--lg">¡Recibí tu consulta!</h3>
+              <h3 className="h3">¡Recibí tu consulta!</h3>
               <p>Gracias, {fields.nombre.split(' ')[0]}. Te respondo pronto por {fields.medio === 'email' ? 'mail' : 'WhatsApp'}.</p>
             </div>
           ) : (
@@ -130,7 +133,7 @@ export default function Contacto() {
                 <input
                   type={fields.medio === 'email' ? 'email' : 'tel'}
                   autoComplete={fields.medio === 'email' ? 'email' : 'tel'}
-                  placeholder={fields.medio === 'email' ? 'tu@mail.com' : '11 2345 6789'}
+                  placeholder={fields.medio === 'email' ? 'tu@mail.com' : '351 234 5678'}
                   {...fieldProps('dato')}
                 />
                 {err('dato')}
@@ -151,7 +154,7 @@ export default function Contacto() {
                 <label htmlFor="f-mensaje">Contame brevemente qué buscás <span className="field__opt">(opcional)</span></label>
                 <textarea rows={3} {...fieldProps('mensaje')} />
               </div>
-              <button className="btn btn--crema btn--lg" type="submit" disabled={status === 'sending'}>
+              <button className="btn btn--crema" type="submit" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Enviando…' : 'Enviar consulta'}
               </button>
               <p className="form__legal">
@@ -167,8 +170,8 @@ export default function Contacto() {
             </form>
           )}
           <div className="direct">
-            <p className="direct__q">¿Preferís escribir directo?</p>
-            <WaButton message="Hola liaz! Quiero consultar por una web." className="btn btn--celeste">Escribime por WhatsApp</WaButton>
+            <p className="h4">¿Preferís escribir directo?</p>
+            <WaButton message="Hola liaz! Quiero consultar por una web." className="btn btn--ghost">Escribime por WhatsApp</WaButton>
           </div>
         </div>
       </div>

@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
-import BigA from './BigA';
 
-/* La "a" de fondo va cambiando suavemente entre los colores de la paleta. */
+/* La "a" va cambiando despacio entre los colores de la paleta. */
 const accents = ['#B9D9E9', '#E9B7A5', '#D6C5E8'];
 
-const explore = [
+const index = [
   { href: '/proyectos', label: 'Proyectos' },
   { href: '/tienda-online', label: 'Tienda online' },
   { href: '/web-profesional', label: 'Web profesional' },
@@ -21,7 +20,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = setInterval(() => setI((n) => (n + 1) % accents.length), 3200);
+    const id = setInterval(() => setI((n) => (n + 1) % accents.length), 3600);
     return () => {
       clearInterval(id);
       cancelAnimationFrame(frame.current);
@@ -57,29 +56,34 @@ export default function Hero() {
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
-      <BigA />
+      <div className="biga" aria-hidden="true">
+        <span className="biga__glow" />
+        <span className="biga__a">a</span>
+      </div>
       <div className="wrap hero__inner">
-        <p className="eyebrow up">liaz · estudio creativo de diseño web</p>
-        <h1 className="hero__title up">Tu negocio merece un lugar propio en internet.</h1>
-        <p className="hero__lead up">
-          Diseño tiendas online y webs profesionales a medida, pensadas para lo que tu negocio necesita.
-        </p>
-        <div className="actions up">
-          <a className="btn btn--dark btn--lg btn--shine" href="#contacto">Contame sobre tu negocio</a>
-          <a className="btn btn--outline btn--lg" href="#diagnostico">¿Es para mí?</a>
+        <div className="hero__text">
+          <h1 className="display hero__title rise">Tu negocio merece un lugar propio en internet.</h1>
+          <p className="lead rise rise--2">
+            Diseño tiendas online y webs profesionales a medida, pensadas para lo que tu negocio necesita.
+          </p>
+          <div className="actions rise rise--3">
+            <a className="btn btn--dark" href="#contacto">Contame sobre tu negocio</a>
+            <a className="btn btn--outline" href="#diagnostico">¿Es para mí?</a>
+          </div>
         </div>
-        <nav className="explore up" aria-label="Explorá">
-          <p className="explore__label">Explorá</p>
-          <div className="explore__links">
-            {explore.map((l) =>
+        <div className="hero__foot rise rise--4">
+          <p className="hero__place">Estudio de diseño web en Córdoba, Argentina</p>
+          <p className="hero__from">Proyectos desde $40.000</p>
+          <nav className="hero__index" aria-label="Explorá">
+            {index.map((l) =>
               l.href.startsWith('#') ? (
-                <a key={l.href} className="chip" href={l.href}>{l.label}</a>
+                <a key={l.href} className="link" href={l.href}>{l.label}</a>
               ) : (
-                <Link key={l.href} className="chip" href={l.href}>{l.label}</Link>
+                <Link key={l.href} className="link" href={l.href}>{l.label}</Link>
               ),
             )}
-          </div>
-        </nav>
+          </nav>
+        </div>
       </div>
     </section>
   );

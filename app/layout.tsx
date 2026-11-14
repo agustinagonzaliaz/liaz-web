@@ -34,16 +34,22 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
 };
 
-export const viewport: Viewport = { themeColor: '#B9D9E9' };
+export const viewport: Viewport = { themeColor: '#FAF2E8' };
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': `${site.siteUrl}/#estudio`,
   name: site.name,
   url: site.siteUrl,
+  image: `${site.siteUrl}/opengraph-image.png`,
   description: 'Estudio creativo de diseño y desarrollo web para emprendimientos, tiendas y profesionales independientes.',
   email: site.email,
-  areaServed: 'AR',
+  telephone: `+${site.whatsapp}`,
+  address: { '@type': 'PostalAddress', addressLocality: 'Córdoba', addressCountry: 'AR' },
+  areaServed: { '@type': 'Country', name: 'Argentina' },
+  priceRange: site.price,
+  sameAs: [`https://www.instagram.com/${site.instagram}`],
   knowsAbout: ['diseño web', 'tiendas online', 'páginas web para emprendedores'],
 };
 
