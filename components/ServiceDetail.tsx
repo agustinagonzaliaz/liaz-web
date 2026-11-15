@@ -21,6 +21,7 @@ export default function ServiceDetail({ s }: { s: Service }) {
             <DeviceDuo
               tone={s.color}
               priority
+              scroll
               desktop={ex.desktop}
               mobile={ex.mobile}
               altDesktop={`Ejemplo de ${s.name} para la marca ficticia ${ex.brand}, en computadora`}

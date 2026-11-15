@@ -15,6 +15,7 @@ export default function ServiciosResumen() {
               <article key={s.id} className="offer__card">
                 <Link className="offer__media" href={s.slug} aria-label={`Ver el detalle de ${s.name}`} tabIndex={-1}>
                   <DeviceDuo
+                    scroll
                     tone={s.color}
                     desktop={s.example.desktop}
                     mobile={s.example.mobile}

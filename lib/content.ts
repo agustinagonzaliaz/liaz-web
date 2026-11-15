@@ -110,7 +110,8 @@ export type Service = {
   optional: string[];
   wa: string;
   color: 'celeste' | 'lila';
-  example: { desktop: string; mobile: string; brand: string };
+  /** Ejemplo de diseño. mobile es opcional: si no hay captura de celular, se muestra solo la compu. */
+  example: { desktop: string; mobile?: string; brand: string };
   seo: { title: string; description: string };
 };
 
@@ -145,7 +146,7 @@ export const services: Service[] = [
     optional: ['Formulario de consultas', 'Galería de trabajos', 'Estructura preparada para buscadores'],
     wa: 'Hola liaz! Quiero consultar por una web profesional.',
     color: 'lila',
-    example: { desktop: '/ejemplos/profesional.webp', mobile: '/ejemplos/profesional-cel.webp', brand: 'Clara Ruiz, nutrición' },
+    example: { desktop: '/ejemplos/kinesiologia.webp', brand: 'Lic. Martín Rojas, kinesiología' },
     seo: {
       title: 'Web profesional para profesionales y negocios · liaz',
       description: 'Diseño webs profesionales a medida para presentar lo que hacés, mostrar tus servicios y recibir consultas. Desde $40.000.',
