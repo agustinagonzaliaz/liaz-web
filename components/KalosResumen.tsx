@@ -18,9 +18,9 @@ export default function KalosResumen() {
             tone="none"
             scroll
             desktop="/proyectos/kalos-inicio.webp"
-            mobile="/proyectos/kalos-producto-cel.webp"
+            mobile="/proyectos/kalos-tienda-cel.webp"
             altDesktop={`${p.name}: página de inicio, en computadora`}
-            altMobile={`${p.name}: ficha de producto, en el celular`}
+            altMobile={`${p.name}: tienda en el celular`}
             sizes="(max-width: 1000px) 90vw, 50vw"
           />
         </Link>

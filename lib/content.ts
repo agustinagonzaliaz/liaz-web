@@ -45,8 +45,7 @@ export const projects: Project[] = [
     summary: 'Una feria digital de ropa y accesorios nuevos y usados, con un panel propio para cargar productos sin tocar código.',
     images: { desktop: '', mobile: '' },
     showcase: [
-      { label: 'Inicio', desktop: '/proyectos/kalos-inicio.webp', mobile: '/proyectos/kalos-inicio-cel.webp' },
-      { label: 'Producto', desktop: '', mobile: '/proyectos/kalos-producto-cel.webp' },
+      { label: 'Tienda', desktop: '/proyectos/kalos-inicio.webp', mobile: '/proyectos/kalos-inicio-cel.webp' },
       { label: 'Panel de administración', desktop: '/proyectos/kalos-admin.webp', mobile: '/proyectos/kalos-admin-cel.webp' },
     ],
   },

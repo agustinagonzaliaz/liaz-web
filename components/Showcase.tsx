@@ -10,7 +10,7 @@ export type Screen = { label: string; desktop?: string; mobile?: string };
  * Las capturas largas (página entera) se recorren solas de arriba a abajo.
  * Cambia de pantalla sola cada unos segundos, o al tocar las pestañas (o con las flechas).
  */
-export default function Showcase({ name, screens, interval = 6000 }: { name: string; screens: Screen[]; interval?: number }) {
+export default function Showcase({ name, screens, interval = 9000 }: { name: string; screens: Screen[]; interval?: number }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
