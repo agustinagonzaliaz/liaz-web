@@ -128,7 +128,7 @@ export const services: Service[] = [
     optional: ['Talles, colores y variantes', 'Carrito de compras', 'Que puedas actualizar productos y precios vos'],
     wa: 'Hola liaz! Quiero consultar por una tienda online.',
     color: 'celeste',
-    example: { desktop: '/ejemplos/tienda.webp', mobile: '/ejemplos/tienda-cel.webp', brand: 'Mora accesorios' },
+    example: { desktop: '/ejemplos/eclhoria.webp', brand: 'Eclhoria, accesorios' },
     seo: {
       title: 'Tienda online para emprendedores · liaz',
       description: 'Diseño tiendas online a medida: catálogo con fotos y precios, pedidos por WhatsApp y diseño pensado para el celular. Desde $40.000.',
