@@ -97,8 +97,8 @@ export default function Contacto() {
           <h2 className="display display--page">Contame sobre tu negocio.</h2>
           <p className="lead">Completá el formulario y te respondo para charlar sobre tu web.</p>
           <ul className="rows small">
-            <li>Presupuesto cerrado antes de empezar</li>
-            <li>Proyectos desde $40.000</li>
+            <li>Presupuesto a medida y sin compromiso</li>
+            <li>Todo acordado por escrito antes de empezar</li>
             <li>Te enseño a usar tu web cuando está lista</li>
           </ul>
         </div>

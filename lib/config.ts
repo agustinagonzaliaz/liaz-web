@@ -11,10 +11,11 @@ export const site = {
   whatsapp: '5493513680542',
   email: 'liaz.webs@gmail.com',
   instagram: 'liaz.creative',
-  price: 'Desde $40.000',
+  /** Frase sobre el precio que se muestra en la web. */
+  price: 'Presupuesto a medida y sin compromiso.',
   title: 'liaz · diseño web y tiendas online para emprendedores',
   description:
-    'Diseño tiendas online y webs profesionales a medida para emprendimientos, tiendas y profesionales. Desde $40.000.',
+    'Diseño tiendas online y webs profesionales a medida para emprendimientos, tiendas y profesionales. Presupuesto a medida y sin compromiso.',
 };
 
 export const waLink = (text: string) =>

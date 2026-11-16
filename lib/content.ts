@@ -130,7 +130,7 @@ export const services: Service[] = [
     example: { desktop: '/ejemplos/eclhoria.webp', brand: 'Eclhoria, accesorios' },
     seo: {
       title: 'Tienda online para emprendedores · liaz',
-      description: 'Diseño tiendas online a medida: catálogo con fotos y precios, pedidos por WhatsApp y diseño pensado para el celular. Desde $40.000.',
+      description: 'Diseño tiendas online a medida: catálogo con fotos y precios, pedidos por WhatsApp y diseño pensado para el celular. Presupuesto a medida y sin compromiso.',
     },
   },
   {
@@ -148,7 +148,7 @@ export const services: Service[] = [
     example: { desktop: '/ejemplos/kinesiologia.webp', brand: 'Lic. Martín Rojas, kinesiología' },
     seo: {
       title: 'Web profesional para profesionales y negocios · liaz',
-      description: 'Diseño webs profesionales a medida para presentar lo que hacés, mostrar tus servicios y recibir consultas. Desde $40.000.',
+      description: 'Diseño webs profesionales a medida para presentar lo que hacés, mostrar tus servicios y recibir consultas. Presupuesto a medida y sin compromiso.',
     },
   },
 ];
@@ -169,7 +169,7 @@ export const toBring = [
 
 /* ---------- Preguntas frecuentes ---------- */
 export const faqs = [
-  { q: '¿Cuánto cuesta?', a: 'Los proyectos arrancan desde $40.000. Antes de empezar te paso un presupuesto cerrado según lo que necesites.' },
+  { q: '¿Cuánto cuesta?', a: 'Depende de lo que necesites: cantidad de secciones, productos y funciones. Después de una charla corta te paso un presupuesto cerrado y sin compromiso, para que sepas exactamente qué incluye antes de empezar.' },
   { q: '¿Cuánto tarda en estar lista?', a: 'Depende del tipo de web y de las funciones que necesites. Te doy un tiempo estimado en la propuesta, antes de empezar.' },
   { q: '¿Puedo actualizarla yo después?', a: 'Depende de cómo se arme tu web. Antes de empezar te cuento qué vas a poder cambiar por tu cuenta.' },
   { q: '¿Hay costos aparte del diseño?', a: 'El dominio y, según la plataforma, el alojamiento pueden tener costos propios. Te explico cuáles aplican antes de empezar.' },

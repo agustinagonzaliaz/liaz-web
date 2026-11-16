@@ -76,7 +76,7 @@ export default function Hero() {
         </div>
         <div className="hero__foot rise rise--4">
           <p className="hero__place">Estudio de diseño web en Córdoba, Argentina</p>
-          <p className="hero__from">Proyectos desde $40.000</p>
+          <p className="hero__from">Presupuesto a medida y sin compromiso</p>
           <nav className="hero__index" aria-label="Explorá">
             {index.map((l) =>
               l.href.startsWith('#') ? (

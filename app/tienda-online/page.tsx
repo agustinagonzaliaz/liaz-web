@@ -17,7 +17,6 @@ const serviceLd = {
   url: `${site.siteUrl}${s.slug}`,
   provider: { '@id': `${site.siteUrl}/#estudio` },
   areaServed: { '@type': 'Country', name: 'Argentina' },
-  offers: { '@type': 'Offer', priceCurrency: 'ARS', priceSpecification: { '@type': 'PriceSpecification', minPrice: 40000, priceCurrency: 'ARS' } },
 };
 
 export default function Page() {

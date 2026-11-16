@@ -48,7 +48,6 @@ const jsonLd = {
   telephone: `+${site.whatsapp}`,
   address: { '@type': 'PostalAddress', addressLocality: 'Córdoba', addressCountry: 'AR' },
   areaServed: { '@type': 'Country', name: 'Argentina' },
-  priceRange: site.price,
   sameAs: [`https://www.instagram.com/${site.instagram}`],
   knowsAbout: ['diseño web', 'tiendas online', 'páginas web para emprendedores'],
 };
