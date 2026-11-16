@@ -312,8 +312,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer__h { font-size: 14px; font-weight: 500; color: var(--chocolate); margin-bottom: 4px; }
 .footer > .wrap { container-type: inline-size; }
 .footer__mark { display: block; width: fit-content; margin-top: clamp(40px, 6vw, 80px); margin-left: -.045em; font-family: var(--display); font-weight: 700; font-size: 30vw; font-size: 61.5cqw; line-height: .78; letter-spacing: -0.055em; color: var(--chocolate); text-decoration: none; user-select: none; }
-.footer__mark span { display: inline-block; }
-.footer__legal { display: flex; flex-wrap: wrap; gap: 8px 28px; padding-block: 22px 26px; margin-top: clamp(20px, 3vw, 36px); border-top: 1px solid var(--linea); font-size: 14px; }
+.footer__mark span { display: inline-block; pointer-events: none; }
+.footer__legal { position: relative; z-index: 1; background: var(--celeste); display: flex; flex-wrap: wrap; gap: 8px 28px; padding-block: 22px 26px; margin-top: clamp(20px, 3vw, 36px); border-top: 1px solid var(--linea); font-size: 14px; }
 .footer__legal span { margin-left: auto; }
 
 /* ---------- Legales y 404 ---------- */
